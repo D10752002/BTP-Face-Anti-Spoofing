@@ -2,8 +2,8 @@ output_dir: 'experiments/output'
 log_dir: 'experiments/log'
 device: '0'
 dataset:
-  name: 'replay'
-  root: 'D:/BTP/maincode/'
+  name: 'OULU-NPU'
+  root: '/home/dinesh/Documents/Projects/BTP-Face-Anti-Spoofing/CDC-Densenet/'
   augmentation:
     horizontal_flip: True
     rotation_range: 10
@@ -13,7 +13,8 @@ dataset:
     saturation: 0.5
     hue: 0.5
   train_set: 'train_data.csv'
-  val_set: 'test_data.csv'
+  val_set: 'dev_data.csv'
+  test_set: 'test_data.csv'
   mean: [0.5,0.5,0.5]
   sigma: [0.5,0.5,0.5]
 model:
@@ -22,11 +23,13 @@ model:
   input_size: [224,224]
   depth_map_size: [32,32]
 train:
-  batch_size: 8
+  batch_size: 64
   optimizer: 'adam'
-  lr: 0.001
-  num_epochs: 10
+  lr: 0.0001
+  num_epochs: 5
   smoothing: True
 val:
+  batch_size: 64
+test:
   batch_size: 64
 

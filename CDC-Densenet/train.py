@@ -44,8 +44,14 @@ def main():
         transforms.ToTensor(),
         transforms.Normalize(cfg['dataset']['mean'], cfg['dataset']['sigma'])
     ])
-    
+
     val_transform = transforms.Compose([
+        transforms.Resize(cfg['model']['input_size']),
+        transforms.ToTensor(),
+        transforms.Normalize(cfg['dataset']['mean'], cfg['dataset']['sigma'])
+    ])
+
+    test_transform = transforms.Compose([
         transforms.Resize(cfg['model']['input_size']),
         transforms.ToTensor(),
         transforms.Normalize(cfg['dataset']['mean'], cfg['dataset']['sigma'])
@@ -66,6 +72,14 @@ def main():
         transform=val_transform,
         smoothing=cfg['train']['smoothing']
     )
+
+    testset = FASDataset(
+        root_dir=cfg['dataset']['root'],
+        csv_file=cfg['dataset']['test_set'],
+        depth_map_size=cfg['model']['depth_map_size'],
+        transform=test_transform,
+        smoothing=cfg['train']['smoothing']
+    )
     
     trainloader = torch.utils.data.DataLoader(
         dataset=trainset,
@@ -73,10 +87,17 @@ def main():
         shuffle=True,
         num_workers=8
     )
-    
+
     valloader = torch.utils.data.DataLoader(
         dataset=valset,
         batch_size=cfg['val']['batch_size'],
+        shuffle=True,
+        num_workers=8
+    )
+    
+    testloader = torch.utils.data.DataLoader(
+        dataset=testset,
+        batch_size=cfg['test']['batch_size'],
         shuffle=True,
         num_workers=8
     )
@@ -90,6 +111,7 @@ def main():
         device=device,
         trainloader=trainloader,
         valloader=valloader,
+        testloader=testloader,
         writer=writer
     )
     

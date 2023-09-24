@@ -19,7 +19,7 @@ class FASDataset(Dataset):
     def __init__(self, root_dir, csv_file, depth_map_size, transform, smoothing):
         super().__init__()
         self.root_dir = root_dir
-        self.data = pd.read_csv(os.path.join('./csv/', csv_file))
+        self.data = pd.read_csv(os.path.join('./OULU-NPU-csv/', csv_file))
         self.depth_map_size = depth_map_size
         self.transform = transform
         
@@ -39,7 +39,7 @@ class FASDataset(Dataset):
             label: 1 (genuine), 0 (fake) 
         """
         img_name = self.data.iloc[index, 0]
-        img_name = os.path.join(self.root_dir, img_name)
+        # img_name = os.path.join(self.root_dir, img_name)
 
         img = Image.open(img_name)
 
