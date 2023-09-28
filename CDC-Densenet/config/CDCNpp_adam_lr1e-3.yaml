@@ -1,4 +1,4 @@
-output_dir: 'experiments/output'
+output_dir: '/home/dinesh/Documents/Projects/BTP weights/CDC-Densenet/output/'
 log_dir: 'experiments/log'
 device: '0'
 dataset:
@@ -31,5 +31,5 @@ train:
 val:
   batch_size: 64
 test:
-  batch_size: 64
+  batch_size: 1024
 

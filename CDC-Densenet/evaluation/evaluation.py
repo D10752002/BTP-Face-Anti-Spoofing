@@ -13,11 +13,11 @@ import cv2
 import models.CDCNs as CDCNs
 import os
 #this is for the path
-test_target_csv = "C:/Users/Admin/OneDrive/face_anti_spoofing/data/nuaa/test.csv"
-test_images_path = "C:/Users/Admin/OneDrive/face_anti_spoofing/data/nuaa/test_all_fin"
-PATH = "C:/Users/Admin/OneDrive/face_anti_spoofing/experiments/output/CDCNpp_nuaa_360.pth"
+test_target_csv = "/home/dinesh/Documents/Projects/BTP-Face-Anti-Spoofing/CDC-Densenet/OULU-NPU-csv/test_data.csv"
+test_images_path = "/home/dinesh/Documents/Datasets/Face anti-spoofing datasets/OULU-NPU-processed/test/"
+PATH = "/home/dinesh/Documents/Projects/BTP weights/CDC-Densenet/output/CustomDenseNetCDCN_OULU-NPU_best.pth"
 #this section is for loading the model
-model = CDCNs.CDCNpp()
+model = CDCNs.CustomDenseNet()
 model_main = torch.load(PATH)
 #then using load_state_dict the parameters are loaded, strict is added to prevent the error
 # because of deleting part of the model
@@ -28,8 +28,9 @@ model.load_state_dict(model_main['state_dict'], strict=False)
 
 #this part is for the 
 def pred_im(test_image):
-    data_transform = transforms.Compose([transforms.Resize((128, 128)), transforms.ToTensor()])
-    path = os.path.join(test_images_path, os.path.basename(test_image))
+    data_transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
+    # path = os.path.join(test_images_path, os.path.basename(test_image))
+    path = test_image
     #print(path)
     image = cv2.imread(path)
     #print(image)
@@ -45,12 +46,12 @@ def pred_im(test_image):
     with torch.no_grad():
             #only the x and y axis are used since depth is only 1 
             #by taking the mean of the depth map, the result of genuineness is found
-            score = torch.mean(outputs[0], axis=(1,2))
-            score = torch.sum()
+            score = torch.mean(outputs, axis=(1,2))
+            # score = torch.sum()
             print(score)
             
             
-    if score >= 0.2:
+    if score >= 0.5:
         return 1
     else:
         return 0
@@ -79,20 +80,22 @@ def confusion(prediction, truth):
     return true_positives, false_positives, true_negatives, false_negatives
 #create the target tensor by reading from the csv directly
 target_list = list(csv.reader(open(test_target_csv)))
+target_list = target_list[1:]
 target_tensor = torch.tensor([int(target_list[i][1]) for i in range(len(target_list))])
 print(target_tensor)
 pred_labels = []
 #for every element in csv, search the photos to find it
 #when found, use pred_img function to decide if it is a 0 or 1 and append to list
 for im in target_list:
-    print("im name", im)
-    for cur_im in os.listdir(test_images_path):
-        cur_im = "images/" + cur_im
-        #if names same, do prediction and add to tensor
-        if cur_im == im[0]:
-            print("add")
-            label_0or1 = pred_im(im[0])
-            print(label_0or1)
+    print("img path", im)
+    # for cur_im in os.listdir(test_images_path):
+    #     cur_im = "images/" + cur_im
+    #     #if names same, do prediction and add to tensor
+    #     if cur_im == im[0]:
+    #         print("add")
+    #         label_0or1 = pred_im(im[0])
+    #         print(label_0or1)
+    label_0or1 = pred_im(im[0])
     try:       
         pred_labels.append(label_0or1)  
     except:
@@ -113,9 +116,11 @@ print(confusion_matrix)
 APCER = FP / (TN + FP)
 BPCER = FN/(FN + TP)
 HTER = (FP/(TN + FP) + FN/(FN + TP)) * 0.5
+ACER = (APCER + BPCER)/2
 print("APCER: ", APCER)
 print("BPCER: ", BPCER)
 print("HTER: ", HTER)
+print("ACER: ", ACER)
 
 
 

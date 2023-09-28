@@ -115,7 +115,16 @@ def main():
         writer=writer
     )
     
-    trainer.train()
+    trainer.load_model(4)
+    # Calculate test metrics
+    APCER, BPCER, ACER = trainer.calculate_metrics()
+
+    # Print the metrics
+    print("APCER: ", APCER)
+    print("BPCER: ", BPCER)
+    print("ACER: ", ACER)
+
+
 
     
     writer.close()
