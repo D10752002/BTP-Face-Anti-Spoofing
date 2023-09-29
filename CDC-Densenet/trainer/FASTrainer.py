@@ -162,11 +162,34 @@ class FASTrainer(BaseTrainer):
 
             return self.val_acc_metric.avg
 
+    # def test_accuracy(self):
+    #     self.network.eval()
+
+    #     with torch.no_grad():
+    #         for i, (img, depth_map, label) in tqdm(enumerate(self.testloader), total=len(self.testloader)):
+    #             img, depth_map, label = img.to(self.device), depth_map.to(self.device), label.to(self.device)
+    #             net_depth_map = self.network(img)
+    #             loss = self.criterion(net_depth_map, depth_map)
+
+    #             preds, score = predict(net_depth_map)
+    #             targets, _ = predict(depth_map)
+
+    #             accuracy = calc_accuracy(preds, targets)
+
+    #             # Update metrics
+    #             self.test_loss_metric=loss.item()
+    #             self.test_acc_metric=accuracy
+
+    #             # add_visualization_to_tensorboard(self.cfg, -1, img, preds, targets, score, self.writer)  # epoch set to -1
+
+    #         return self.test_acc_metric
+
     def test_accuracy(self):
         self.network.eval()
-
+        self.test_loss_metric.reset(0)
+        self.test_acc_metric.reset(0)
         with torch.no_grad():
-            for i, (img, depth_map, label) in enumerate(self.testloader):
+            for i, (img, depth_map, label) in tqdm(enumerate(self.testloader), total=len(self.testloader)):
                 img, depth_map, label = img.to(self.device), depth_map.to(self.device), label.to(self.device)
                 net_depth_map = self.network(img)
                 loss = self.criterion(net_depth_map, depth_map)
@@ -176,13 +199,15 @@ class FASTrainer(BaseTrainer):
 
                 accuracy = calc_accuracy(preds, targets)
 
-                # Update metrics
-                self.test_loss_metric=loss.item()
-                self.test_acc_metric=accuracy
+                # Update metrics using AvgMeter's update method
+                self.test_loss_metric.update(loss.item())
+                self.test_acc_metric.update(accuracy)
 
                 # add_visualization_to_tensorboard(self.cfg, -1, img, preds, targets, score, self.writer)  # epoch set to -1
 
-            return self.test_acc_metric
+            # After the loop, you can retrieve the average values using AvgMeter's properties
+            return self.test_acc_metric.avg
+
 
 
 

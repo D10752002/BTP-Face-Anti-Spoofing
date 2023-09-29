@@ -31,5 +31,5 @@ train:
 val:
   batch_size: 64
 test:
-  batch_size: 1024
+  batch_size: 64
 

@@ -117,12 +117,15 @@ def main():
     
     trainer.load_model(4)
     # Calculate test metrics
-    APCER, BPCER, ACER = trainer.calculate_metrics()
+    # APCER, BPCER, ACER = trainer.calculate_metrics()
 
-    # Print the metrics
-    print("APCER: ", APCER)
-    print("BPCER: ", BPCER)
-    print("ACER: ", ACER)
+    # # Print the metrics
+    # print("APCER: ", APCER)
+    # print("BPCER: ", BPCER)
+    # print("ACER: ", ACER)
+
+    test_accuracy= trainer.test_accuracy()
+    print("Test accuracy: ", test_accuracy)
 
 
 
