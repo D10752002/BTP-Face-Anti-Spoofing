@@ -1,0 +1,5 @@
+loaded as /home/dinesh/Documents/Projects/BTP weights/CDC-Densenet/output/CustomDenseNetCDCN_OULU-NPU_7.pth
+APCER:  1.5027036090036467
+BPCER:  5.1142523116165375
+ACER:  3.3084779603100922
+Test accuracy:  0.9778193792166923

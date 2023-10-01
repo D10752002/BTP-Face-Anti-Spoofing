@@ -115,20 +115,21 @@ def main():
         writer=writer
     )
     
-    trainer.load_model(4)
-    best_val_acc_so_far = 0.9850965090506095  # Fill in the best validation accuracy achieved in previous training
-    trainer.best_val_acc = best_val_acc_so_far
-    trainer.train(5)
+    trainer.load_model(7)
+    # best_val_acc_so_far = 0.9850965090506095  # Fill in the best validation accuracy achieved in previous training
+    # trainer.best_val_acc = best_val_acc_so_far
+    # trainer.train(5)
+
     # Calculate test metrics
-    # APCER, BPCER, ACER = trainer.calculate_metrics()
+    APCER, BPCER, ACER = trainer.calculate_metrics()
 
-    # # Print the metrics
-    # print("APCER: ", APCER)
-    # print("BPCER: ", BPCER)
-    # print("ACER: ", ACER)
+    # Print the metrics
+    print("APCER: ", APCER)
+    print("BPCER: ", BPCER)
+    print("ACER: ", ACER)
 
-    # test_accuracy= trainer.test_accuracy()
-    # print("Test accuracy: ", test_accuracy)
+    test_accuracy= trainer.test_accuracy()
+    print("Test accuracy: ", test_accuracy)
 
 
 
