@@ -99,15 +99,16 @@ class FASTrainer(BaseTrainer):
             # Update metrics
             self.train_loss_metric.update(loss.item())
             self.train_acc_metric.update(accuracy)
-
+            # print('Epoch: {}, iter: {}, loss: {}, acc: {}'.format(epoch, epoch * len(self.trainloader) + i, self.train_loss_metric.avg, self.train_acc_metric.avg))
+            
             tqdm.write('Epoch: {}, iter: {}, loss: {}, acc: {}'.format(epoch, epoch * len(self.trainloader) + i, self.train_loss_metric.avg, self.train_acc_metric.avg))
 
     # uses the train_one_epoch repeatedly for findihing the training
-    def train(self):
+    def train(self, start_epoch=0):
         #if self.cfg['train']['pretrained'] == "True":
         #    epoch = 
 
-        for epoch in range(self.cfg['train']['num_epochs']):
+        for epoch in range(start_epoch, self.cfg['train']['num_epochs']):
             self.train_one_epoch(epoch)
             epoch_acc = self.validate(epoch)
             if epoch_acc > self.best_val_acc:
@@ -143,7 +144,7 @@ class FASTrainer(BaseTrainer):
 
         seed = randint(0, len(self.valloader)-1)
         with torch.no_grad():
-            for i, (img, depth_map, label) in enumerate(self.valloader):
+            for i, (img, depth_map, label) in tqdm(enumerate(self.valloader), total=len(self.valloader)):
                 img, depth_map, label = img.to(self.device), depth_map.to(self.device), label.to(self.device)
                 net_depth_map = self.network(img)
                 loss = self.criterion(net_depth_map, depth_map)
