@@ -1,0 +1,28 @@
+epoch 1:
+Training BCE supervision Loss: 0.455
+Training BCE classification Loss: 0.0328
+Validation BCE supervision Loss: 0.2896
+Validation BCE classification Loss: 0.3445
+Validation Accuracy: 0.9183
+
+epoch 2:
+Training BCE supervision Loss: 0.1289
+Training BCE classification Loss: 0.0017
+Validation BCE supervision Loss: 0.1603
+Validation BCE classification Loss: 0.4775
+Validation Accuracy: 0.8906
+
+epoch 3:
+Training BCE supervision Loss: 0.052
+Training BCE classification Loss: 0.0006
+Validation BCE supervision Loss: 0.0892
+Validation BCE classification Loss: 0.1135
+Validation Accuracy: 0.9664
+
+epoch 4:
+Training BCE supervision Loss: 0.0234
+Training BCE classification Loss: 0.0002
+Validation BCE supervision Loss: 0.0599
+Validation BCE classification Loss: 0.2315
+Validation Accuracy: 0.967
+
