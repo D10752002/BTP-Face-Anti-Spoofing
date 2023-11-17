@@ -26,3 +26,17 @@ Validation BCE supervision Loss: 0.0599
 Validation BCE classification Loss: 0.2315
 Validation Accuracy: 0.967
 
+epoch 5:
+Training BCE supervision Loss: 0.012
+Training BCE classification Loss: 0.0012
+Validation BCE supervision Loss: 0.0601
+Validation BCE classification Loss: 0.0388
+Validation Accuracy: 0.9902
+
+epoch 6:
+Training BCE supervision Loss: 0.0068
+Training BCE classification Loss: 0.0002
+Validation BCE supervision Loss: 0.1808
+Validation BCE classification Loss: 0.1869
+Validation Accuracy: 0.9715
+
