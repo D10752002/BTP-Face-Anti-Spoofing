@@ -20,9 +20,9 @@ Validation BCE classification Loss: 0.0479
 Validation Accuracy: 0.9871
 
 epoch 4:
-Training BCE supervision Loss: 0.0072
-Training BCE classification Loss: 0.0001
-Validation BCE supervision Loss: 0.0535
-Validation BCE classification Loss: 0.0802
-Validation Accuracy: 0.9857
+Training BCE supervision Loss: 0.0079
+Training BCE classification Loss: 0.0003
+Validation BCE supervision Loss: 0.0483
+Validation BCE classification Loss: 0.0469
+Validation Accuracy: 0.9892
 
